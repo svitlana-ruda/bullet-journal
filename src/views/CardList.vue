@@ -1,20 +1,23 @@
 <template>
-  <div>
-    <CardCreate />
-    <CardShow />
-  </div>
+  <main>
+    <CardSingle />
+  </main>
 </template>
 
 <script>
 // @ is an alias to /src
-import CardCreate from '@/components/CardCreate.vue'
-import CardShow from '@/components/CardShow.vue'
+import CardSingle from '@/components/CardSingle.vue'
 
 export default {
   name: 'card-list',
   components: {
-    CardCreate,
-    CardShow
+    CardSingle
   }
 }
 </script>
+
+<style lang="scss" scoped>
+main {
+  flex: 1;
+}
+</style>
