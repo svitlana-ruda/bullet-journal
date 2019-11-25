@@ -41,4 +41,7 @@ h1 {
 img {
   object-fit: contain;
 }
+.container {
+  width: 300px;
+}
 </style>

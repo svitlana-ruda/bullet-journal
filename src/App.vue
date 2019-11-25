@@ -38,7 +38,6 @@ body {
   height: 100%;
 }
 .container {
-  width: 300px;
   padding-left: 5px;
   padding-right: 5px;
 }

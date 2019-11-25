@@ -8,8 +8,8 @@
           id="item"
           placeholder="Enter new task..."
           v-model="newTask"
-          autofocus
           @keyup.enter="addTask"
+          autofocus
         />
       </div>
       <div class="col-2">
@@ -73,14 +73,12 @@
 </template>
 
 <script>
+import EventService from '@/services/EventService.js'
+
 export default {
   name: 'card-single',
   data() {
     return {
-      selectedColor: 0,
-      newTask: '',
-      idForTask: 2,
-      beforeEditCache: '',
       tasks: [
         {
           id: 1,
@@ -89,6 +87,10 @@ export default {
           editing: false
         }
       ],
+      newTask: '',
+      idForTask: 2,
+      beforeEditCache: '',
+      selectedColor: 0,
       colors: [
         {
           colorId: 1,
@@ -166,6 +168,15 @@ export default {
     backgroundColor() {
       return this.colors[this.selectedColor].variantColor
     }
+  },
+  created() {
+    EventService.getCards()
+      .then(response => {
+        this.cards = response.data
+      })
+      .catch(error => {
+        console.log(error.response)
+      })
   }
 }
 </script>
@@ -191,6 +202,8 @@ input[type='checkbox'] {
   background: #e1e2e1;
   margin: 10px auto;
   padding: 15px;
+  max-width: 290px;
+  min-width: 290px;
 }
 .color-box {
   width: 30px;
