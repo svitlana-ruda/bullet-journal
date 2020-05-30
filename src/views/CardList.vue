@@ -5,10 +5,11 @@
         type="submit"
         class="btn"
         @click="addCard"
-        :disabled="isButtonDisabled"
+        v-if="cards.length < 3"
       >
-        {{ buttonName }}
+        Add another card
       </button>
+      <button v-else class="btn btn-disabled">You've added enough</button>
     </div>
     <div class="container">
       <div class="row align-items-start">
@@ -35,9 +36,7 @@ export default {
   },
   data() {
     return {
-      cards: [],
-      buttonName: 'Add new card',
-      isButtonDisabled: false
+      cards: []
     }
   },
   created() {
@@ -78,5 +77,8 @@ main {
   &:focus {
     color: #f5f5f6;
   }
+}
+.btn-disabled {
+  opacity: 0.65;
 }
 </style>

@@ -1,5 +1,9 @@
 <template>
-  <section class="card container" :style="{ backgroundColor }">
+  <section
+    class="card container"
+    @set-background="setBackgroud"
+    :style="{ backgroundColor }"
+  >
     <div class="row align-items-center input-main">
       <div class="col-10">
         <input
@@ -12,11 +16,7 @@
           autofocus
         />
       </div>
-      <div class="col-2">
-        <a href="#" data-toggle="modal" data-target="#Modal">
-          <img src="../assets/color.png" width="34px" height="34px" />
-        </a>
-      </div>
+      <CardColor />
     </div>
     <div v-for="(task, index) in tasks" :key="task.id">
       <div class="task-styling">
@@ -44,39 +44,18 @@
         </button>
       </div>
     </div>
-    <aside>
-      <div class="modal fade" id="Modal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered modal-sm">
-          <div class="modal-content">
-            <div class="modal-header">
-              <h6 class="modal-title" id="ModalLabel">
-                Choose a background color:
-              </h6>
-              <button type="button" class="close" data-dismiss="modal">
-                <span>&times;</span>
-              </button>
-            </div>
-            <div class="modal-body">
-              <div
-                class="color-box"
-                v-for="(color, index) in colors"
-                :key="color.colorId"
-                :style="{ backgroundColor: color.variantColor }"
-                @click="updateColor(index)"
-              ></div>
-            </div>
-          </div>
-        </div>
-      </div>
-    </aside>
   </section>
 </template>
 
 <script>
 import EventService from '@/services/EventService.js'
+import CardColor from '@/components/CardColor.vue'
 
 export default {
   name: 'card-single',
+  components: {
+    CardColor
+  },
   data() {
     return {
       tasks: [
@@ -89,34 +68,7 @@ export default {
       ],
       newTask: '',
       idForTask: 2,
-      beforeEditCache: '',
-      selectedColor: 0,
-      colors: [
-        {
-          colorId: 1,
-          variantColor: '#b0c4de'
-        },
-        {
-          colorId: 2,
-          variantColor: '#7ab1e6'
-        },
-        {
-          colorId: 3,
-          variantColor: '#f3f3f3'
-        },
-        {
-          colorId: 4,
-          variantColor: '#8fcfd1'
-        },
-        {
-          colorId: 5,
-          variantColor: '#ffb4ff'
-        },
-        {
-          colorId: 6,
-          variantColor: '#fafad2'
-        }
-      ]
+      beforeEditCache: ''
     }
   },
   directives: {
@@ -128,9 +80,6 @@ export default {
     }
   },
   methods: {
-    updateColor(index) {
-      this.selectedColor = index
-    },
     addTask() {
       if (this.newTask.trim().length === 0) {
         return
@@ -162,11 +111,6 @@ export default {
     cancelEdit(task) {
       task.title = this.beforeEditCache
       task.editing = false
-    }
-  },
-  computed: {
-    backgroundColor() {
-      return this.colors[this.selectedColor].variantColor
     }
   },
   created() {
@@ -205,15 +149,6 @@ input[type='checkbox'] {
   max-width: 290px;
   min-width: 290px;
 }
-.color-box {
-  width: 30px;
-  height: 30px;
-  border: 1px solid black;
-  border-radius: 0.25rem;
-  display: inline-block;
-  margin-right: 0.89rem;
-  cursor: pointer;
-}
 .task-title,
 .task-input {
   padding: 5px;
@@ -238,10 +173,6 @@ h6 {
 }
 button {
   outline: none;
-}
-.modal-header {
-  border-bottom: none;
-  padding-bottom: 0;
 }
 .task-styling {
   display: flex;
